@@ -81,24 +81,32 @@ const GetUserById = async (req, res) => {
 };
 
 const UpdateUser = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { data } = req.body;
+  try {
+    const { id } = req.params;
+    let { nom, email, tel, password, role, statut } = req.body;
 
-        if (data.mdp) {
-            data.mdp = await bcrypt.hash(data.mdp, 10);
-        }
+    const updatedData = { nom, email, tel, role, statut };
 
-        const updatedUser = await User.findByIdAndUpdate(id, data, { new: true });
-
-        if (!updatedUser) {
-            return res.status(404).json({ message: "Utilisateur non trouvé" });
-        }
-
-        res.status(200).json({ message: "Utilisateur mis à jour", user: updatedUser });
-    } catch (error) {
-        res.status(500).json({ message: "Erreur lors de la mise à jour", error });
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updatedData.mdp = hashedPassword;
     }
+
+    const updatedUser = await User.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    res.status(200).json({ message: "Utilisateur mis à jour", user: updatedUser });
+  } catch (error) {
+    console.error("Erreur serveur :", error);
+    res.status(500).json({
+      message: "Erreur lors de la mise à jour de l'utilisateur",
+      error: error.message
+    });
+  }
 };
+
 
 export { Inscription, Login, GetAllUsers, GetUserById, UpdateUser };

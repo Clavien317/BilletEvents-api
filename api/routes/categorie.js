@@ -4,7 +4,7 @@ import { ajouterCategorie, listerCategories, modifierCategorie, supprimerCategor
 
 
 
-router.post("/create", ajouterCategorie);
+router.post("/", ajouterCategorie);
 router.get("/", listerCategories)
 router.put("/:id", modifierCategorie);
 router.delete("/:id", supprimerCategorie);

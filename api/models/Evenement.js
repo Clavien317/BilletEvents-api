@@ -14,6 +14,7 @@ const EvenementSchema = new mongoose.Schema({
   adresse: { type: String },
   ville: { type: String, required: true },
   pays: { type: String, required: true },
+  approbation: { type: Boolean, default: false }, 
 
   devise: { type: String, required: true }, // ex: MGA, EUR, etc.
   image: { type: String, required: false },

@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 import connectMongo from "./utils/db.js";
 import userRoutes from './routes/user.js';
+import categorieRoutes from './routes/categorie.js';
+import deviseRoutes from './routes/devise.js';
+import localisationRoutes from './routes/localisation.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,6 +17,9 @@ app.use(express.json());
 
 connectMongo()
 app.use('/api/users', userRoutes);
+app.use('/api/categories', categorieRoutes);
+app.use('/api/devises', deviseRoutes);
+app.use('/api/localisations', localisationRoutes);
 app.get('/', (req, res) => {
     res.send('Bienvenue sur l\'API de gestion des utilisateurs !');
 })

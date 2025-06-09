@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 const DeviseSchema = new mongoose.Schema({
     devis: { type: String, required: true },
+    symbole: { type: String, required: true }, 
   },
   {
       timestamps:true

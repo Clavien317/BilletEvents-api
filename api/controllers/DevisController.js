@@ -2,9 +2,9 @@ import Devise from '../models/Devise.js';
 
 export const ajouterDevise = async (req, res) => {
   try {
-    const { devis } = req.body;
+    const { devis,symbole } = req.body;
 
-    const nouvelleDevise = new Devise({ devis });
+    const nouvelleDevise = new Devise({ devis,symbole });
     await nouvelleDevise.save();
 
     res.status(201).json(nouvelleDevise);
@@ -16,11 +16,11 @@ export const ajouterDevise = async (req, res) => {
 export const modifierDevise = async (req, res) => {
   try {
     const { id } = req.params;
-    const { devis } = req.body;
+    const { devis,symbole } = req.body;
 
     const deviseModifiee = await Devise.findByIdAndUpdate(
       id,
-      { devis },
+      { devis,symbole },
       { new: true }
     );
 
@@ -50,7 +50,6 @@ export const supprimerDevise = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la suppression", error });
   }
 };
-
 
 export const listerDevises = async (req, res) => {
   try {

@@ -2,8 +2,8 @@ import CategorieEvenement from '../models/Categorie.js';
 
 export const ajouterCategorie = async (req, res) => {
   try {
-    const { nom, description } = req.body;
-    const nouvelleCategorie = new CategorieEvenement({ nom, description });
+    const { designation, description } = req.body;
+    const nouvelleCategorie = new CategorieEvenement({ designation, description });
     await nouvelleCategorie.save();
     res.status(201).json(nouvelleCategorie);
   } catch (error) {
@@ -14,11 +14,11 @@ export const ajouterCategorie = async (req, res) => {
 export const modifierCategorie = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nom, description } = req.body;
+    const { designation, description } = req.body;
 
     const categorieModifiee = await CategorieEvenement.findByIdAndUpdate(
       id,
-      { nom, description },
+      { designation, description },
       { new: true }
     );
 

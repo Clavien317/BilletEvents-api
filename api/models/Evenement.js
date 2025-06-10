@@ -14,6 +14,7 @@ const EvenementSchema = new mongoose.Schema({
   adresse: { type: String },
   ville: { type: String, required: true },
   pays: { type: String, required: true },
+  approbation: { type: Boolean, default: false }, 
 
   devise: { type: String, required: true }, // ex: MGA, EUR, etc.
   image: { type: String, required: false },
@@ -21,6 +22,7 @@ const EvenementSchema = new mongoose.Schema({
   categorie: { type: String, required: true },
 
   billets: { type: [BilletSchema], required: true }, // tableau de types de billets
+  image: { type: String, required: true}
 
 }, { timestamps: true });
 

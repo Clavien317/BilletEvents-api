@@ -22,6 +22,7 @@ const EvenementSchema = new mongoose.Schema({
   categorie: { type: String, required: true },
 
   billets: { type: [BilletSchema], required: true }, // tableau de types de billets
+  image: { type: String, required: true}
 
 }, { timestamps: true });
 

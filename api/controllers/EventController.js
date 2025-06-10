@@ -2,49 +2,43 @@ import Evenement from '../models/Evenement.js';
 import path from 'path';
 
 
-
 export const ajouterEvenement = async (req, res) => {
   try {
-    const {
-      idOrg,
-      titre,
-      description,
-      dateEvent,
-      adresse,
-      ville,
-      pays,
-      devise,
-      statut,
-      categorie,
-      billets
-    } = req.body;
 
-    let image = null;
-    if (req.file) {
-      image = `/uploads/${req.file.filename}`;
+    let billets = [];
+    if (req.body.billets) {
+      try {
+        billets = JSON.parse(req.body.billets);
+      } catch (e) {
+        console.warn('Impossible de parser billets:', e);
+        billets = [];
+      }
     }
 
     const nouvelEvenement = new Evenement({
-      idOrg,
-      titre,
-      description,
-      dateEvent,
-      adresse,
-      ville,
-      pays,
-      devise,
-      image,
-      statut,
-      categorie,
-      billets: billets
+      idOrg: req.body.idOrg,
+      titre: req.body.titre,
+      description: req.body.description,
+      dateEvent: req.body.dateEvent,
+      adresse: req.body.adresse,
+      ville: req.body.ville,
+      pays: req.body.pays,
+      devise: req.body.devise,
+      image: req.file ? `/uploads/${req.file.filename}` : null,
+      statut: req.body.statut,
+      categorie: req.body.categorie,
+      billets: billets,
     });
 
     await nouvelEvenement.save();
+
     res.status(201).json(nouvelEvenement);
   } catch (error) {
-    res.status(500).json({ message: "Erreur lors de l'ajout de l'événement", error });
+    console.error("Erreur lors de l'ajout de l'événement :", error);
+    res.status(500).json({ message: "Erreur lors de l'ajout de l'événement", error: error.message });
   }
 };
+
  
 
 export const modifierEvenement = async (req, res) => {
@@ -72,12 +66,10 @@ export const modifierEvenement = async (req, res) => {
     }
     res.status(200).json(evenementModifie);
   } catch (error) {
-    console.error("Erreur serveur :", error); // utile pour loguer dans la console
-    res.status(500).json({
-    message: "Erreur lors de la modification de l'événement",
-    error: error.message
-  });
-}
+      console.error("Erreur lors de l'ajout de l'événement :", error);
+      res.status(500).json({ message: "Erreur lors de l'ajout de l'événement", error: error.message });
+    }
+
 };
 
 

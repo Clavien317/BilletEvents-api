@@ -1,16 +1,15 @@
 import mongoose from 'mongoose';
 
-
 const AchatSchema = new mongoose.Schema({
-    idEvent: { type: String, required: true },
-    nbPlace: { type: String, required: true },
-    typeReserv: { type: String, required: true },
-    sommePrix: { type: Date, required: true },
-    statut: { type: String, required: false },
-  },
-  {
-      timestamps:true
-  })
+  idUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  idEvent: { type: mongoose.Schema.Types.ObjectId, ref: 'Evenement', required: true },
+  nbPlace: { type: Number, required: true, min: 1 },
+  typeBillet: { type: String, required: true },
+  sommePrix: { type: Number, required: true, min: 0 },
+  statut: { type: String, default: "Payé" }
+}, {
+  timestamps: true
+});
 
 const Achat = mongoose.models.Achat || mongoose.model('Achat', AchatSchema);
 
